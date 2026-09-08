@@ -1,0 +1,56 @@
+# Prompt 5 — Gemini API Integration
+
+Integrate Gemini into the BugPilot AI backend.
+
+Use the official Gemini API SDK that is appropriate for the current Node.js environment.
+
+Environment variable:
+GEMINI_API_KEY
+
+Do not hardcode the key.
+Do not send the key to the browser.
+Do not expose the key in logs.
+
+Create one server-side AI call for POST /api/debug.
+
+AI system instruction:
+
+"You are BugPilot, a concise AI debugging assistant for Python, JavaScript, and C++.
+Analyze the provided programming language, error message, and code.
+Identify the most likely root cause using only the supplied information.
+Explain the problem in simple language.
+Suggest a practical fix.
+Return corrected code when a correction is possible.
+Do not invent APIs, variables, runtime behavior, or errors that are unsupported by the input.
+If the input is insufficient to determine the exact cause, clearly state that the diagnosis is probable rather than certain.
+Keep the answer focused on the supplied code and error."
+
+User payload to the model should include:
+- Language
+- Error
+- Code
+
+Ask the model to return structured JSON with exactly these fields:
+{
+  "rootCause": "...",
+  "explanation": "...",
+  "suggestedFix": "...",
+  "fixedCode": "..."
+}
+
+Implementation requirements:
+- Parse/validate the model response.
+- If the model returns invalid JSON, handle the failure safely.
+- Never send raw internal provider errors directly to the user if they expose implementation details.
+- Provide a clean generic error message to the frontend when AI analysis fails.
+- Keep temperature/settings conservative enough for consistent debugging responses.
+- Keep prompts concise to reduce latency and cost.
+
+Use a lightweight Gemini model suitable for a fast hackathon MVP.
+
+After implementation, test with at least:
+1. Python IndexError
+2. JavaScript undefined property error
+3. C++ out-of-bounds example
+
+Fix all API integration issues before proceeding.

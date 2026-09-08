@@ -1,0 +1,27 @@
+# Prompt 10 — Deployment Preparation
+
+Prepare BugPilot AI for deployment.
+
+Requirements:
+- Production build must succeed.
+- Environment variables must be documented.
+- No secrets may exist in source code.
+- Add .env.example with placeholder variable names only.
+- Ensure frontend calls the correct production API path.
+- Ensure backend/API routes work in the selected deployment architecture.
+- Add a simple health check if useful.
+- Handle CORS only as required by the chosen deployment setup.
+- Verify that development-only code is not shipped.
+
+Create/update deployment documentation in README.md with:
+1. Project overview
+2. Features
+3. Supported languages
+4. Local setup
+5. Environment variables
+6. Run commands
+7. Deployment notes
+
+Do not add unnecessary infrastructure.
+
+Run the final production build and report any remaining issues.

@@ -1,0 +1,29 @@
+# Prompt 3 — Frontend Polish + Design QA
+
+Review the BugPilot AI frontend as a senior product designer and frontend engineer.
+
+Do not add new major features.
+
+Audit:
+- Visual hierarchy
+- Spacing consistency
+- Typography
+- Button hierarchy
+- Input readability
+- Code editor usability
+- Result readability
+- Empty/loading/error states
+- Responsive layout
+- Accessibility
+- Long text/code overflow
+
+Make the UI feel cohesive and production-ready while preserving the existing architecture.
+
+Important:
+- Keep the interface simple.
+- Do not introduce unnecessary cards, decorative sections, or animations.
+- Ensure the primary action "Analyze Bug" is visually obvious.
+- Ensure the result sections are easy to scan.
+- Ensure the app still looks good at common desktop and mobile widths.
+
+Run the project after your changes and fix any issues you find.

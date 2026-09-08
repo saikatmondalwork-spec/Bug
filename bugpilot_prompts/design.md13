@@ -1,0 +1,20 @@
+# Prompt 13 — Optional: Small “Beginner Mode” Feature
+
+Add one small optional feature called "Explain for Beginners" to the result panel.
+
+Behavior:
+- The existing AI result remains unchanged.
+- Add a button that asks the backend/AI to rewrite only the explanation in beginner-friendly language.
+- Keep the feature lightweight.
+- Do not create a new page.
+- Do not add a database.
+- Reuse the existing API architecture where practical.
+
+The output should explain:
+- What went wrong
+- Why it happened
+- What concept the user should learn
+
+Keep the response concise.
+
+Do not implement this feature if it risks destabilizing the working MVP.

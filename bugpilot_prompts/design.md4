@@ -1,0 +1,54 @@
+# Prompt 4 — Backend API
+
+Now implement the minimal backend required for BugPilot AI.
+
+Create one endpoint only:
+POST /api/debug
+
+Expected request JSON:
+{
+  "language": "Python | JavaScript | C++",
+  "error": "string",
+  "code": "string"
+}
+
+Requirements:
+- Validate that language, error, and code are present.
+- Validate that language is one of Python, JavaScript, or C++.
+- Return useful HTTP status codes.
+- Return JSON responses.
+- Keep the API implementation simple.
+- Add basic request size protection/validation so extremely large payloads are rejected.
+- Keep the AI API key on the server only.
+- Read secrets from environment variables.
+- Never expose secrets in API responses.
+- Handle AI provider failures without crashing the server.
+
+Expected success response shape:
+{
+  "success": true,
+  "result": {
+    "rootCause": "string",
+    "explanation": "string",
+    "suggestedFix": "string",
+    "fixedCode": "string"
+  }
+}
+
+Expected error response shape:
+{
+  "success": false,
+  "error": "Human-readable error message"
+}
+
+Add a simple health route if it helps deployment/debugging, such as:
+GET /api/health
+
+Do not create authentication, database logic, user accounts, file uploads, code execution, or multiple API endpoints unless required by the existing framework.
+
+Keep frontend and backend concerns separated.
+
+After implementation:
+- Run the backend.
+- Test /api/debug with a sample request.
+- Fix all syntax/runtime errors.

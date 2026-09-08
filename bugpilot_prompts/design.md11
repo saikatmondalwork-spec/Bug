@@ -1,0 +1,51 @@
+# Prompt 11 — GitHub README + Project Documentation
+
+Create professional hackathon documentation for BugPilot AI.
+
+Update README.md with:
+- Project title
+- One-sentence description
+- Problem
+- Solution
+- Key features
+- Supported languages
+- Architecture overview
+- Tech stack
+- How AI is used
+- Local setup
+- Environment variables
+- How to run
+- Example workflow
+- Limitations
+- Future improvements
+
+Create these files if they do not already exist:
+
+1. PROBLEM_STATEMENT.md
+Explain the real-world problem BugPilot addresses and why beginners/developers struggle with debugging.
+
+2. SOLUTION.md
+Explain the product workflow and how the AI assists the user.
+
+3. ARCHITECTURE.md
+Describe the simple architecture:
+Frontend → Backend API → Gemini → Structured response → Frontend
+
+4. IBM_BOB_USAGE.md
+Document how IBM Bob was used throughout development. Cover:
+- Project initialization
+- Requirement interpretation
+- Frontend generation
+- Backend/API implementation
+- AI integration
+- Debugging/fixing issues
+- Testing
+- Refactoring/polish
+- Documentation
+
+Do not falsely claim that Bob performed actions that it did not perform. Base the document on the actual development workflow.
+
+5. DEMO.md
+Give a concise 2–3 minute demonstration flow using one built-in example from each supported language.
+
+Keep the documentation factual, clean, and easy for judges to review.

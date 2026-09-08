@@ -1,0 +1,28 @@
+# Prompt 8 — Validation + Error Handling
+
+Perform a reliability pass on BugPilot AI.
+
+Test these cases:
+1. Missing language
+2. Missing error
+3. Missing code
+4. Empty whitespace input
+5. Very long code input within reasonable limits
+6. AI provider error
+7. Network failure
+8. Malformed AI response
+9. User clicks Analyze repeatedly
+10. User clicks Clear while a result is displayed
+11. Copy button with valid fixed code
+12. Copy button failure
+13. Each of the 3 supported languages
+14. Each built-in example
+
+Improve validation and error handling where necessary.
+
+User-facing errors should be concise and understandable.
+Avoid exposing stack traces, API keys, provider internals, or sensitive server details.
+
+Do not add authentication or database systems just for error handling.
+
+Run the application after changes and fix all obvious console/build/runtime errors.

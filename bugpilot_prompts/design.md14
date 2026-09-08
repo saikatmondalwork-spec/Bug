@@ -1,0 +1,17 @@
+# Prompt 14 — Final Demo Content Prompt
+
+Create three polished demonstration cases for BugPilot AI:
+
+1. Python — IndexError
+2. JavaScript — TypeError from accessing a property of an undefined value
+3. C++ — Array out-of-bounds access
+
+For each case provide:
+- Short title
+- Error message
+- Minimal broken code
+- What BugPilot should identify
+- A concise corrected version
+
+Keep the examples easy to understand in a 2–3 minute hackathon demo.
+Do not execute code.

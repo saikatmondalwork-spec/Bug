@@ -1,0 +1,30 @@
+# Prompt 9 — Final Product Polish
+
+Give BugPilot AI a final hackathon-ready polish pass.
+
+Do not add major features.
+
+Improve only:
+- Visual consistency
+- Empty state
+- Loading state
+- Error state
+- Button states
+- Code readability
+- Spacing
+- Responsive behavior
+- Accessibility
+- Copy feedback
+- Form validation messages
+
+Ensure:
+- The main action is immediately obvious.
+- A first-time user understands what to enter.
+- Results are easy to scan.
+- Long code does not break the layout.
+- The interface remains minimal.
+- The product name and purpose are immediately clear.
+
+Remove placeholder text, lorem ipsum, debug controls, console logs, and unfinished UI.
+
+Run a production build and fix any issues.

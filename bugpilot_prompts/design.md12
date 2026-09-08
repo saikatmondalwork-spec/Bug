@@ -1,0 +1,43 @@
+# Prompt 12 — Final QA / Hackathon Check
+
+Act as the final QA engineer for BugPilot AI.
+
+Do not add new product features.
+
+Perform a complete review of the project against this MVP definition:
+
+Core functionality:
+- User selects Python, JavaScript, or C++.
+- User enters an error.
+- User enters/pastes code.
+- User clicks Analyze Bug.
+- Frontend calls backend.
+- Backend securely calls Gemini.
+- AI returns root cause, explanation, suggested fix, and corrected code.
+- Frontend displays the result.
+- User can copy corrected code.
+- User can load examples.
+- User can clear the workspace.
+
+Check:
+- Build succeeds.
+- No obvious runtime errors.
+- No API key is exposed to the client.
+- Environment variables are used correctly.
+- API validation works.
+- AI failure handling works.
+- UI is responsive.
+- Loading state works.
+- Error state works.
+- Example bugs work.
+- Documentation exists.
+- README instructions are accurate.
+- No dead code or unfinished placeholder text remains.
+
+Do not over-engineer.
+
+At the end, provide a concise report with:
+1. PASS items
+2. Issues found
+3. Fixes applied
+4. Any remaining risks

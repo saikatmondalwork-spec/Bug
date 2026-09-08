@@ -1,0 +1,34 @@
+# Prompt 7 — Example Bug Library
+
+Add a small built-in BugPilot example library for reliable demonstrations.
+
+Create exactly 6 examples: 2 Python, 2 JavaScript, and 2 C++.
+
+Each example must contain:
+- id
+- title
+- language
+- error
+- code
+- expected issue summary
+
+Choose simple, deterministic bugs that are easy for a judge to understand.
+
+Recommended categories:
+Python:
+1. IndexError
+2. NameError
+
+JavaScript:
+3. Undefined property / TypeError
+4. Incorrect array index / undefined value
+
+C++:
+5. Array out-of-bounds
+6. Uninitialized or incorrect variable usage
+
+Add a simple "Try Example" interaction that populates the editor and error field.
+
+Do not execute the code. These examples are input samples for AI analysis only.
+
+Keep the UI compact and unobtrusive.

@@ -1,0 +1,52 @@
+# Prompt 1 — Project Initialization + Development Rules
+
+You are the lead software engineer for this project.
+
+Create and maintain a project called "BugPilot AI".
+
+Product goal:
+BugPilot AI is a clean, simple AI debugging assistant. A user selects Python, JavaScript, or C++, enters an error message and pastes code. The application sends the information to a secure backend endpoint, which calls an LLM API. The AI returns a structured debugging result containing root cause, simple explanation, suggested fix, and corrected code.
+
+This is a one-day hackathon MVP. Prioritize reliability, clarity, clean UX, and a working end-to-end flow over advanced features.
+
+Technical principles:
+- Keep the architecture simple.
+- Prefer maintainable, readable code over abstraction-heavy code.
+- Use reusable React components.
+- Keep frontend and backend responsibilities clearly separated.
+- Never expose an AI API key in frontend code.
+- Use environment variables for secrets.
+- Add clear loading, empty, and error states.
+- Avoid unnecessary libraries.
+- Avoid authentication, databases, payments, multi-user features, code execution, Docker sandboxes, GitHub repository analysis, multi-file projects, and custom model training.
+- Do not add features that are not required by the MVP unless explicitly requested.
+
+Initial stack:
+- React + Vite
+- Tailwind CSS
+- Node.js backend/API
+- Monaco Editor or another lightweight code editor component
+- Gemini API as the default LLM provider
+
+Supported languages:
+- Python
+- JavaScript
+- C++
+
+AI output must be structured and predictable. Prefer JSON/schema-based responses from the backend so the frontend can render results consistently.
+
+Security requirements:
+- Never hardcode API keys.
+- Never send the API key to the browser.
+- Keep secrets only in server environment variables.
+- Validate request bodies on the backend.
+- Handle upstream AI/API failures gracefully.
+
+Code quality requirements:
+- Use descriptive names.
+- Keep components focused.
+- Add comments only where they improve maintainability.
+- Remove dead code and debug logs before finalization.
+- Keep the UI responsive for desktop and mobile.
+
+Before implementing anything, inspect the existing project structure and preserve useful existing work instead of unnecessarily replacing it.

@@ -1,0 +1,45 @@
+# Prompt 6 — Frontend ↔ Backend Integration
+
+Connect the existing BugPilot AI frontend to POST /api/debug.
+
+Do not redesign the entire UI.
+Use the existing components and styles.
+
+When the user clicks "Analyze Bug":
+1. Validate language, error, and code.
+2. Show loading state.
+3. Send JSON to /api/debug.
+4. Wait for the response.
+5. If success, render rootCause, explanation, suggestedFix, and fixedCode.
+6. If failure, show a clear user-facing error message.
+7. Re-enable the analyze button after completion.
+
+Request:
+{
+  "language": selectedLanguage,
+  "error": errorText,
+  "code": codeText
+}
+
+Success response:
+{
+  "success": true,
+  "result": {
+    "rootCause": "...",
+    "explanation": "...",
+    "suggestedFix": "...",
+    "fixedCode": "..."
+  }
+}
+
+Requirements:
+- Do not expose the Gemini API key in frontend code.
+- Use the backend endpoint only.
+- Handle network failures.
+- Handle non-200 responses.
+- Handle missing result fields safely.
+- Avoid duplicate submissions from repeated clicks.
+- Preserve the user's input if the request fails.
+- Keep result sections readable for long answers.
+
+Then run the full application and verify the complete end-to-end flow.

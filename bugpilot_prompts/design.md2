@@ -1,0 +1,75 @@
+# Prompt 2 — Frontend UI / Design
+
+Build the BugPilot AI frontend as a polished, minimal, developer-focused interface.
+
+Do not implement backend/API logic yet. Focus only on the frontend UI and local interaction states.
+
+Design direction:
+- Clean modern developer-tool aesthetic.
+- Minimal visual noise.
+- Strong typography hierarchy.
+- Professional spacing.
+- Responsive layout.
+- Clear primary call-to-action.
+- Avoid excessive gradients, glassmorphism, giant illustrations, or unnecessary animations.
+- The application should look like a real product, not a school project.
+
+Create these UI sections:
+
+1. Header
+- BugPilot AI logo/name.
+- Small subtitle such as "AI-powered debugging assistant".
+- Optional simple status indicator such as "AI ready".
+
+2. Main debugging workspace
+- Language dropdown with exactly: Python, JavaScript, C++.
+- Error Message input area.
+- Code editor area using Monaco Editor if compatible with the current project.
+- Primary button: "Analyze Bug".
+- Secondary button: "Clear".
+- Example button/dropdown so the user can load sample bugs.
+
+3. Results panel
+Initially show an empty state such as:
+"Paste an error and code to begin analysis."
+
+After a successful mock/local analysis, render:
+- Root Cause
+- Explanation
+- Suggested Fix
+- Fixed Code
+- Copy Code button
+
+4. Status states
+- Empty state
+- Loading state
+- Success state
+- Error state
+
+5. Example area
+Provide a compact way to load a predefined example for each supported language.
+
+Interaction requirements:
+- Analyze button must not be disabled permanently; it should validate required fields and show a useful message when fields are missing.
+- Clear resets the form and result.
+- Copy Code copies corrected code to clipboard and gives brief feedback.
+- Example selection populates language, error, and code fields.
+- Preserve a clean result layout even when text is long.
+- Code blocks must be readable and scrollable.
+
+Accessibility:
+- Every input must have a visible label or accessible name.
+- Keyboard navigation should work.
+- Buttons need clear focus states.
+- Do not use color alone to communicate errors.
+
+Responsive behavior:
+- Desktop: two-column workspace with input on the left and results on the right.
+- Mobile/tablet: stack the sections vertically.
+
+Do not connect a real AI API yet. Use realistic mock result data where needed so the complete UI can be tested.
+
+After implementation:
+- Run the app.
+- Check for build/runtime errors.
+- Fix obvious spacing, overflow, and responsive issues.
