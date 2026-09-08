@@ -164,13 +164,17 @@ app.post('/api/debug', async (req, res) => {
 
 // ── Start ─────────────────────────────────────────────────────────────────────
 
-app.listen(PORT, () => {
-  const isKeySet = Boolean(process.env.GEMINI_API_KEY && process.env.GEMINI_API_KEY.trim() && process.env.GEMINI_API_KEY !== 'your_gemini_api_key_here')
-  console.log(`BugPilot API running on http://localhost:${PORT}`)
-  console.log(`Health: http://localhost:${PORT}/api/health`)
-  if (!isKeySet) {
-    console.log('Mode: DEMO MODE active (GEMINI_API_KEY is not set in .env). Built-in examples are fully functional.')
-  } else {
-    console.log('Mode: LIVE AI active with Gemini API.')
-  }
-})
+if (!process.env.VERCEL) {
+  app.listen(PORT, () => {
+    const isKeySet = Boolean(process.env.GEMINI_API_KEY && process.env.GEMINI_API_KEY.trim() && process.env.GEMINI_API_KEY !== 'your_gemini_api_key_here')
+    console.log(`BugPilot API running on http://localhost:${PORT}`)
+    console.log(`Health: http://localhost:${PORT}/api/health`)
+    if (!isKeySet) {
+      console.log('Mode: DEMO MODE active (GEMINI_API_KEY is not set in .env). Built-in examples are fully functional.')
+    } else {
+      console.log('Mode: LIVE AI active with Gemini API.')
+    }
+  })
+}
+
+module.exports = app
