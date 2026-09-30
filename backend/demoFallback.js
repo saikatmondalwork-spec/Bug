@@ -67,6 +67,26 @@ print(calc_hypotenuse(3, 4))`,
     }
   }
 
+  // 2d. Python Critical Regression Case
+  if (language === 'Python' && codeLower.includes('len(mark)')) {
+    return {
+      rootCause: "The code attempts to calculate the average by dividing total by len(mark) instead of len(marks).",
+      explanation: "Inside the loop, 'mark' is a single integer, which does not have a length. 'len(mark)' raises a TypeError. The intended denominator for an average is the length of the list 'marks'.",
+      suggestedFix: "Change len(mark) to len(marks).",
+      fixedCode: `def calculate_average(marks):
+    total = 0
+
+    for mark in marks:
+        total += mark
+
+    return total / len(marks)
+
+marks = [80, 75, 90, 85]
+
+print("Average:", calculate_average(marks))`
+    }
+  }
+
   // 3. JavaScript TypeError (find undefined)
   if (language === 'JavaScript' && (codeLower.includes('users.find') || (errLower.includes('typeerror') && errLower.includes('name')))) {
     return {

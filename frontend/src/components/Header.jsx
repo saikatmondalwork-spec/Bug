@@ -4,11 +4,19 @@ import { Bug, RotateCcw, Terminal, HelpCircle } from 'lucide-react'
 export default function Header({ aiHealth, onClearWorkspace }) {
   const [showHelp, setShowHelp] = useState(false)
 
+  let statusLabel = 'Demo Fallback'
+  let statusTooltip = 'Running in demo mode with pre-computed diagnoses'
   const isLive = aiHealth?.mode === 'live' || aiHealth?.geminiConfigured
-  const statusLabel = isLive ? 'AI Ready (Live)' : 'AI Ready (Demo Fallback)'
-  const statusTooltip = isLive
-    ? 'Gemini 3.8 Flash engine connected and active'
-    : 'Running in demo mode with pre-computed diagnoses'
+  
+  if (aiHealth?.mode === 'live') {
+    statusLabel = 'Gemini AI Connected'
+    statusTooltip = 'Gemini AI engine connected and active'
+  } else if (aiHealth?.mode === 'error' || aiHealth?.status === 'error') {
+    statusLabel = 'AI Service Error'
+    statusTooltip = 'Could not connect to the backend'
+  } else if (aiHealth?.mode === 'demo' || aiHealth?.mode === 'fallback') {
+    statusLabel = 'Demo Fallback'
+  }
 
   return (
     <header className="sticky top-0 z-30 bg-[#0b0f19]/90 backdrop-blur-md border-b border-slate-800/80 px-4 sm:px-6 py-2.5 transition-colors">

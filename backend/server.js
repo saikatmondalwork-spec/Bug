@@ -1,6 +1,7 @@
 require('dotenv').config()
 const express = require('express')
 const cors = require('cors')
+const { execSync } = require('child_process')
 const { GoogleGenerativeAI } = require('@google/generative-ai')
 
 const app = express()
@@ -44,7 +45,7 @@ const CANDIDATE_MODELS = ['gemini-3.8-flash', 'gemini-3.6-flash', 'gemini-flash-
 async function analyzeWithGemini(language, error, code) {
   const client = getGenAI()
   const prompt = `Language: ${language}
-Error: ${error}
+Error: ${error || "No reliable stack trace was provided. Analyze the source code directly and identify likely syntax, runtime, or logical bugs."}
 Code:
 ${code}
 
@@ -103,7 +104,7 @@ app.get(['/api/health', '/health'], (req, res) => {
   res.json({
     status: 'ok',
     service: 'BugPilot AI',
-    mode: isKeySet ? 'live' : 'demo',
+    mode: isKeySet ? 'live' : 'fallback',
     geminiConfigured: isKeySet,
   })
 })
@@ -113,10 +114,10 @@ app.post(['/api/debug', '/debug'], async (req, res) => {
   const { language, error, code } = req.body ?? {}
 
   // Validation
-  if (!language || !error || !code) {
+  if (!language || !code) {
     return res.status(400).json({
       success: false,
-      error: 'Missing required fields: language, error, and code are all required.',
+      error: 'Missing required fields: language and code are required.',
     })
   }
 
@@ -127,15 +128,17 @@ app.post(['/api/debug', '/debug'], async (req, res) => {
     })
   }
 
-  if (typeof error !== 'string' || error.trim().length === 0) {
-    return res.status(400).json({ success: false, error: 'Error message must be a non-empty string.' })
+  // Error can be empty
+  const safeError = error || ""
+  if (typeof safeError !== 'string') {
+    return res.status(400).json({ success: false, error: 'Error message must be a string.' })
   }
 
   if (typeof code !== 'string' || code.trim().length === 0) {
     return res.status(400).json({ success: false, error: 'Code must be a non-empty string.' })
   }
 
-  if (error.length > MAX_ERROR_LENGTH) {
+  if (safeError.length > MAX_ERROR_LENGTH) {
     return res.status(400).json({ success: false, error: 'Error message is too long (max 2000 characters).' })
   }
 
@@ -147,19 +150,33 @@ app.post(['/api/debug', '/debug'], async (req, res) => {
 
   if (isKeySet) {
     try {
-      const result = await analyzeWithGemini(language, error.trim(), code.trim())
-      return res.json({ success: true, result, mode: 'live' })
+      let result = await analyzeWithGemini(language, safeError.trim(), code.trim())
+      
+      let validationStatus = 'skipped'
+      if (language === 'Python' && result.fixedCode) {
+        try {
+          execSync('python -c "import sys, ast; ast.parse(sys.stdin.read())"', { input: result.fixedCode });
+          validationStatus = 'success';
+          if (result.fixedCode.trim() === code.trim()) {
+            validationStatus = 'failed_no_change';
+          }
+        } catch (e) {
+          validationStatus = 'failed_syntax';
+        }
+      }
+      
+      return res.json({ success: true, result, mode: 'live', validationStatus })
     } catch (err) {
       console.error('Gemini error:', err.message)
       // If Gemini live call fails, gracefully fallback to demo result rather than failing hard
-      const fallback = getDemoFallbackResult(language, error.trim(), code.trim())
+      const fallback = getDemoFallbackResult(language, safeError.trim(), code.trim())
       return res.json({ success: true, result: fallback, mode: 'fallback', note: 'Live API temporarily unavailable, using fallback analysis.' })
     }
   }
 
   // Demo fallback mode
-  const result = getDemoFallbackResult(language, error.trim(), code.trim())
-  return res.json({ success: true, result, mode: 'demo' })
+  const result = getDemoFallbackResult(language, safeError.trim(), code.trim())
+  return res.json({ success: true, result, mode: 'fallback' })
 })
 
 // ── Start ─────────────────────────────────────────────────────────────────────

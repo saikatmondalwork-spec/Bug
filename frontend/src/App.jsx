@@ -36,10 +36,12 @@ export default function App() {
         if (res.ok) {
           const data = await res.json()
           setAiHealth(data)
+        } else {
+          setAiHealth({ mode: 'error', geminiConfigured: false })
         }
       } catch {
-        // Backend ping failed, default to demo mode
-        setAiHealth({ mode: 'demo', geminiConfigured: false })
+        // Backend ping failed, default to error mode
+        setAiHealth({ mode: 'error', geminiConfigured: false })
       }
     }
     checkHealth()
@@ -103,15 +105,6 @@ export default function App() {
     async (e) => {
       if (e && e.preventDefault) e.preventDefault()
 
-      // Client-side validation
-      if (!errorMessage.trim() && !code.trim()) {
-        setValidationMsg('Please provide both an error message/stack trace and your code.')
-        return
-      }
-      if (!errorMessage.trim()) {
-        setValidationMsg('Please paste an error message or stack trace.')
-        return
-      }
       if (!code.trim()) {
         setValidationMsg('Please provide the source code to debug.')
         return
@@ -149,10 +142,21 @@ export default function App() {
             setAiHealth((prev) => ({ ...prev, mode: data.mode }))
           }
           if (data.result?.fixedCode) {
-            // Immediately apply fix to editor and set change status to pending
             setOriginalCode(submittedCode)
-            setCode(data.result.fixedCode)
-            setChangeStatus('pending')
+            if (data.validationStatus === 'failed_syntax') {
+              setValidationMsg('Fix generated but validation failed (syntax error).')
+              setChangeStatus(null)
+            } else if (data.validationStatus === 'failed_no_change') {
+              setValidationMsg('Fix generated but validation failed (no changes detected).')
+              setChangeStatus(null)
+            } else {
+              if (data.validationStatus === 'success') {
+                setValidationMsg('Fix validated successfully.')
+              }
+              // Immediately apply fix to editor and set change status to pending
+              setCode(data.result.fixedCode)
+              setChangeStatus('pending')
+            }
           }
         }
       } catch {
@@ -250,9 +254,15 @@ export default function App() {
               {validationMsg && (
                 <div
                   role="alert"
-                  className="flex items-center gap-2 p-2.5 rounded-lg bg-amber-950/30 border border-amber-500/30 text-xs text-amber-200"
+                  className={`flex items-center gap-2 p-2.5 rounded-lg border text-xs ${
+                    validationMsg.includes('successfully') 
+                      ? 'bg-emerald-950/30 border-emerald-500/30 text-emerald-200' 
+                      : 'bg-amber-950/30 border-amber-500/30 text-amber-200'
+                  }`}
                 >
-                  <AlertCircle className="w-4 h-4 text-amber-400 shrink-0" />
+                  <AlertCircle className={`w-4 h-4 shrink-0 ${
+                    validationMsg.includes('successfully') ? 'text-emerald-400' : 'text-amber-400'
+                  }`} />
                   <span>{validationMsg}</span>
                 </div>
               )}
