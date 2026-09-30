@@ -39,7 +39,7 @@ If the input is insufficient to determine the exact cause, clearly state that th
 Keep the answer focused on the supplied code and error.
 Always respond with valid JSON only — no markdown, no code fences, no extra text.`
 
-const CANDIDATE_MODELS = ['gemini-3.6-flash', 'gemini-flash-latest', 'gemini-3.5-flash']
+const CANDIDATE_MODELS = ['gemini-3.8-flash', 'gemini-3.6-flash', 'gemini-flash-latest', 'gemini-3.5-flash']
 
 async function analyzeWithGemini(language, error, code) {
   const client = getGenAI()
@@ -98,7 +98,7 @@ Respond with JSON in exactly this shape:
 const { getDemoFallbackResult } = require('./demoFallback')
 
 // Health check
-app.get('/api/health', (req, res) => {
+app.get(['/api/health', '/health'], (req, res) => {
   const isKeySet = Boolean(process.env.GEMINI_API_KEY && process.env.GEMINI_API_KEY.trim() && process.env.GEMINI_API_KEY !== 'your_gemini_api_key_here')
   res.json({
     status: 'ok',
@@ -109,7 +109,7 @@ app.get('/api/health', (req, res) => {
 })
 
 // Main debug endpoint
-app.post('/api/debug', async (req, res) => {
+app.post(['/api/debug', '/debug'], async (req, res) => {
   const { language, error, code } = req.body ?? {}
 
   // Validation

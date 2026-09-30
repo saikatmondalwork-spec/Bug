@@ -33,6 +33,40 @@ print(calculate_sum([1, 2, 3]))`,
     }
   }
 
+  // 2b. Python Infinite Loop
+  if (language === 'Python' && (errLower.includes('timeout') || codeLower.includes('countdown') || errLower.includes('infinite loop'))) {
+    return {
+      rootCause: "The loop variable 'count' is never decremented inside the while loop, causing an infinite loop condition.",
+      explanation: "The condition 'while count > 0' remains true indefinitely because the body of the loop appends 'count' to results without modifying 'count'. Execution will never reach the return statement.",
+      suggestedFix: "Add 'count -= 1' inside the while loop body so that the loop progresses toward termination.",
+      fixedCode: `def countdown(start):
+    count = start
+    results = []
+    while count > 0:
+        results.append(count)
+        count -= 1
+    return results
+
+print(countdown(5))`,
+    }
+  }
+
+  // 2c. Python Missing Import
+  if (language === 'Python' && (errLower.includes('sqrt') || codeLower.includes('calc_hypotenuse') || codeLower.includes('sqrt('))) {
+    return {
+      rootCause: "The function 'sqrt' is called in calc_hypotenuse without importing it from the Python 'math' module.",
+      explanation: "Python does not provide 'sqrt' in the built-in global namespace. To use mathematical functions like square root, you must explicitly import them from the standard library 'math' module.",
+      suggestedFix: "Add 'from math import sqrt' at the top of the file before calling sqrt().",
+      fixedCode: `from math import sqrt
+
+def calc_hypotenuse(a, b):
+    # Calculate hypotenuse using Pythagorean theorem
+    return sqrt(a**2 + b**2)
+
+print(calc_hypotenuse(3, 4))`,
+    }
+  }
+
   // 3. JavaScript TypeError (find undefined)
   if (language === 'JavaScript' && (codeLower.includes('users.find') || (errLower.includes('typeerror') && errLower.includes('name')))) {
     return {
